@@ -11,3 +11,7 @@ A visual recreation and reinterpretation of the Intertoys store in Hengelo durin
 - [@d_ytme](https://www.github.com/octokatherine) (Sammy)
 - [@Qu1nnXD](https://github.com/Qu1nnXD) (Quinn)
 
+## Credits
+
+- Bricks & Planks Textures from cc0-textures.com
+- Inter-Toys for their logo and branding.
