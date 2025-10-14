@@ -82,10 +82,7 @@ void loadStorefrontAssets() {
   middlePillar = new TiledImage(pillarTexture, leftPillar.xSize+520, 0, 120, windowOffset, 35, 35);
   rightPillar = new TiledImage(pillarTexture, width-95, 0, 95, windowOffset, 35, 35);
 
-  // Generate the store's name
-  // I LOOOOVE BOILERPLATE CODE <3<3<3
-  float signXPos = 700;
-  float signYPos = height-buildingOffset-36;
+  // Generate the store's text labels
 
 
 }
