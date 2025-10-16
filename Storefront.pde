@@ -1,10 +1,11 @@
 
+// Visual Aspect + Decorations for the Storefront
+
+
+
+
 // █░█ ▄▀█ █▀█ █ ▄▀█ █▄▄ █░░ █▀▀ █▀
 // ▀▄▀ █▀█ █▀▄ █ █▀█ █▄█ █▄▄ ██▄ ▄█
-
-
-// Fonts
-PFont arialBold;
 
 
 // Shadows & Gradients
@@ -14,11 +15,7 @@ PImage topGradient;
 PImage bottomGradient;
 
 
-// Decorations
-PImage christmasTree;
-
-
-// Textures & Tiled Images
+// Images & Tiled Images
 PImage brickWallTexture;
 TiledImage brickWall;
 
@@ -35,6 +32,8 @@ TiledImage panelJoint;
 
 PImage secondFloorWindowTexture;
 TiledImage secondFloorWindow;
+
+PImage christmasTree;
 
 PImage christmasGarlandTexture;
 TiledImage christmasGarland;
@@ -57,9 +56,6 @@ void addVariableGradient(PImage type, int opacityMultiplier, float xPos, float y
 
 
 void loadStorefrontAssets() {
-
-  // Load in the fonts
-  arialBold = loadFont("Arial-BoldMT-96.vlw");
 
   // Load in the gradients
   leftGradient = loadImage("LeftGradient.png");
@@ -249,41 +245,3 @@ void drawStorefront() {
 
 // █▀▀ █░░ ▄▀█ █▀ █▀ █▀▀ █▀
 // █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
-
-// TO DO -- determine if this is even worth it lol
-
-class TextObject {
-  float xPos, yPos, rotation;
-  int fontSize;
-  String content;
-  color fontColor = #E0DB5A;
-
-  TextObject(String content, int fontSize, float xPos, float yPos, float rotation) {
-    this.content = content;
-    this.fontSize = fontSize;
-    this.xPos = xPos;
-    this.yPos = yPos;
-    this.rotation = rotation;
-  }
-
-  void render() {
-
-    textFont(arialBold);
-    textAlign(CENTER, CENTER);
-
-    pushMatrix();
-
-    translate(xPos, yPos);
-    rotate(radians(rotation));
-
-    //fill(#000000);
-    //textSize(Math.round(fontSize*7/6));
-    //text(content, 0, 0);
-
-    fill(fontColor);
-    textSize(fontSize);
-    text(content, 0, 0);
-
-    popMatrix();
-  }
-}

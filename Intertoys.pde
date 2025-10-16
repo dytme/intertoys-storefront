@@ -1,4 +1,8 @@
 
+// Main Tab (Initializing & Connections)
+
+
+
 
 // █░░ █ █▄▄ █▀█ ▄▀█ █▀█ █ █▀▀ █▀
 // █▄▄ █ █▄█ █▀▄ █▀█ █▀▄ █ ██▄ ▄█
@@ -33,6 +37,7 @@ void setup() {
  
  // Methods that load in different variables
  loadStorefrontAssets();
+ loadInteractableObjects();
  
 }
 
@@ -49,6 +54,7 @@ void draw() {
   
   // Draw the scene itself
   drawStorefront();
+  drawInteractableObjects();
   
 }
 
@@ -63,4 +69,12 @@ void draw() {
 
 void windowResized() {
   surface.setSize(1280, 720);
+}
+
+void mousePressed() {
+  println(clickableObj.size());
+  for (int i = 0; i<clickableObj.size(); i++) {
+    Clickable tempObj = clickableObj.get(i);
+    tempObj.onClick(mouseX, mouseY);
+  }
 }
