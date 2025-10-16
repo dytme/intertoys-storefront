@@ -1,9 +1,21 @@
 
+
+// █░░ █ █▄▄ █▀█ ▄▀█ █▀█ █ █▀▀ █▀
+// █▄▄ █ █▄█ █▀▄ █▀█ █▀▄ █ ██▄ ▄█
+
+import processing.sound.*;
+
+
+
+
 // █░█ ▄▀█ █▀█ █ ▄▀█ █▄▄ █░░ █▀▀ █▀
 // ▀▄▀ █▀█ █▀▄ █ █▀█ █▄█ █▄▄ ██▄ ▄█
 
 
-float sineClock = 0.0;
+// Global Positions
+// What offset from the ground each part of the scene is drawn at.
+float buildingOffset = 565;
+float windowOffset = 400;
 
 
 
@@ -16,7 +28,7 @@ void setup() {
  
  size(1280,720,P2D); // P2D is more efficient than the default rendering engine. 
  surface.setLocation(100,100); // Force the window to appear on the screen (and not off-screen, can happen sometimes)
- pixelDensity(1); // Disable pixel scaling on high-resolution devices (causes issues when a device is connected to external monitors)
+ //pixelDensity(1); // Disable pixel scaling on high-resolution devices (causes issues when a device is connected to external monitors)
  surface.setResizable(false); // Disable window resizing (a lot of positioning is absolute and not relative, would break stuff)
  
  // Methods that load in different variables
@@ -37,11 +49,6 @@ void draw() {
   
   // Draw the scene itself
   drawStorefront();
-  
-  
-  // Handle the animation clock(s)
-  sineClock += 0.1;
-  if (sineClock >= TWO_PI) { sineClock = -TWO_PI; } // Prevent rounding errors with big floats by resetting sineClock
   
 }
 
