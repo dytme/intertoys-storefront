@@ -1,6 +1,11 @@
 
 // Main Tab (Initializing & Connections)
 
+// Credits: Click Sound Effect by u_u4pf5h7zip from Pixabay
+//          Yay Sound Effect by freesound_community from Pixabay
+//          Wet Bandits Image from Alamy / Courtesy of Hughes Entertainment and 20th Century Fox
+//          Cheer Sound Effect by DRAGON-STUDIO from Pixabay
+
 
 
 
@@ -21,6 +26,9 @@ import processing.sound.*;
 float buildingOffset = 565;
 float windowOffset = 400;
 
+// Background Music
+SoundFile music;
+
 
 
 
@@ -32,12 +40,17 @@ void setup() {
  
  size(1280,720,P2D); // P2D is more efficient than the default rendering engine. 
  surface.setLocation(100,100); // Force the window to appear on the screen (and not off-screen, can happen sometimes)
- //pixelDensity(1); // Disable pixel scaling on high-resolution devices (causes issues when a device is connected to external monitors)
+ pixelDensity(1); // Disable pixel scaling on high-resolution devices (causes issues when a device is connected to external monitors)
  surface.setResizable(false); // Disable window resizing (a lot of positioning is absolute and not relative, would break stuff)
  
  // Methods that load in different variables
  loadStorefrontAssets();
  loadInteractableObjects();
+ 
+ // Handle the background music
+ music = new SoundFile(this, "JingleBells.mp3");
+ music.amp(0.2);
+ music.loop();
  
 }
 
@@ -46,15 +59,19 @@ void draw() {
   
   background(#FFFFFF);
   
-  // Draw the animated interactions
-  
-  
-  // Draw the interactable elements
-  
-  
   // Draw the scene itself
   drawStorefront();
   drawInteractableObjects();
+  
+  drawPresentInstructions(); // Gameplay instructions
+  
+  /*
+  // very obviously a dev tool, hopefully we won't forget to comment it out
+  textSize(12);
+  textAlign(CENTER, LEFT);
+  text("mouse x= " + Integer.toString(mouseX), 40, 40);
+  text("mouse y= " + Integer.toString(mouseY), 40, 70);
+  */
   
 }
 
@@ -72,9 +89,17 @@ void windowResized() {
 }
 
 void mousePressed() {
-  println(clickableObj.size());
-  for (int i = 0; i<clickableObj.size(); i++) {
-    Clickable tempObj = clickableObj.get(i);
+  
+  // Loop through all of clickableObj and define a temporary Clickable object to work with
+  for (Clickable tempObj : clickableObj) {
     tempObj.onClick(mouseX, mouseY);
+  }
+  
+}
+
+void mouseMoved() {
+  flashlight.move(mouseX, mouseY);
+  for (Hoverable tempObj : hoverableObj) {
+    tempObj.isLit(mouseX, mouseY, flashlightRadius);
   }
 }
