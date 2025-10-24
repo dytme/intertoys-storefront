@@ -5,6 +5,10 @@
 //          Yay Sound Effect by freesound_community from Pixabay
 //          Wet Bandits Image from Alamy / Courtesy of Hughes Entertainment and 20th Century Fox
 //          Cheer Sound Effect by DRAGON-STUDIO from Pixabay
+//          Bricks & Planks Textures from cc0-textures.com
+//          Inter-Toys for their logo and branding.
+//          Jingle Bells Music by Otto from Pixabay
+
 
 
 
@@ -64,14 +68,6 @@ void draw() {
   drawInteractableObjects();
   
   drawPresentInstructions(); // Gameplay instructions
-  
-  /*
-  // very obviously a dev tool, hopefully we won't forget to comment it out
-  textSize(12);
-  textAlign(CENTER, LEFT);
-  text("mouse x= " + Integer.toString(mouseX), 40, 40);
-  text("mouse y= " + Integer.toString(mouseY), 40, 70);
-  */
   
 }
 

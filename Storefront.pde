@@ -15,31 +15,24 @@ PImage topGradient;
 PImage bottomGradient;
 
 
-// Images & Tiled Images
-PImage brickWallTexture;
+// Tiled Images
 TiledImage brickWall;
-
-PImage planksWallTexture;
 TiledImage planksWall;
 
-PImage pillarTexture;
 TiledImage leftPillar;
 TiledImage middlePillar;
 TiledImage rightPillar;
 
-PImage panelJointTexture;
 TiledImage panelJoint;
 
-PImage secondFloorWindowTexture;
 TiledImage secondFloorWindow;
 
-PImage christmasTree;
-
-PImage christmasGarlandTexture;
 TiledImage christmasGarland;
 TiledImage shelfGarland;
 
 
+// Image Assets
+PImage christmasTree;
 
 
 
@@ -64,13 +57,13 @@ void loadStorefrontAssets() {
   bottomGradient = loadImage("BottomGradient.png");
 
   // Load in images
-  brickWallTexture = loadImage("BrickWallTexture.png");
-  planksWallTexture = loadImage("PlanksWallTexture.png");
-  pillarTexture = loadImage("PillarTexture.png");
-  panelJointTexture = loadImage("PanelJoint.png");
-  secondFloorWindowTexture = loadImage("SecondFloorWindow.png");
+  PImage brickWallTexture = loadImage("BrickWallTexture.png");
+  PImage planksWallTexture = loadImage("PlanksWallTexture.png");
+  PImage pillarTexture = loadImage("PillarTexture.png");
+  PImage panelJointTexture = loadImage("PanelJoint.png");
+  PImage secondFloorWindowTexture = loadImage("SecondFloorWindow.png");
   
-  christmasGarlandTexture = loadImage("Garland.png");
+  PImage christmasGarlandTexture = loadImage("Garland.png");
   christmasTree = loadImage("Christmas Tree.png");
 
   // Compute and save the textures
@@ -85,19 +78,12 @@ void loadStorefrontAssets() {
   middlePillar = new TiledImage(pillarTexture, leftPillar.xSize+520, 0, 120, windowOffset, 35, 35);
   rightPillar = new TiledImage(pillarTexture, width-95, 0, 95, windowOffset, 35, 35);
 
-  // Generate the store's text labels
-
-
 }
 
 
 void drawTilePillar(float xPos, float yPos, float xSize, float ySize) {
   fill(#9A9C97);
   rect(xPos, yPos, xSize, ySize);
-}
-
-
-void drawStoreName() {
 }
 
 
@@ -129,7 +115,7 @@ void drawBuilding() {
 
 
 // Render the top part of the storefront
-void drawStoreSign() {
+void drawStoreSignHolder() {
   pushMatrix();
   translate(0, height-buildingOffset);
   
@@ -228,20 +214,12 @@ void drawStorefront() {
 
   noStroke();
 
+  // Call upon each part of the storefront to be rendered
   drawBuilding();
-  drawStoreSign();
+  drawStoreSignHolder();
   drawStorefrontFrame();
-
-  
-  
 
   // Make the entire scene darker (Christmas night <3 )
   fill(#44000000);
   rect(0, 0, width, height);
 }
-
-
-
-
-// █▀▀ █░░ ▄▀█ █▀ █▀ █▀▀ █▀
-// █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
