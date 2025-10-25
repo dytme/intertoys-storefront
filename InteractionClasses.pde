@@ -19,9 +19,9 @@ boolean isInRectBounds(float xCheck, float yCheck, float xPos, float yPos, float
 
 
 
-
 // █▀▀ █░░ ▄▀█ █▀ █▀ █▀▀ █▀
 // █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
+
 
 
 // Image signs on the storefront
@@ -95,7 +95,6 @@ class StoreSign implements Clickable {
 
 
 
-
 // Mostly used for the flashlight
 class LightSource {
 
@@ -143,12 +142,12 @@ class SecretImage implements Hoverable {
   }
 
   // Algorithm that determines whether the mouse is within distance "radius" of the image (normally radius = flashlightRadius)
+  // This method will reappear a couple of times, however the alternative of having a public method that can be shared by all of the hoverable objects
+  // seemed inefficient in it of itself, as we would have had to parse a lot of object-specific arguments.
   @Override public void isLit(float xCheck, float yCheck, float radius) {
     if ((xCheck+radius > xPos && xCheck-radius < xPos+xSize) && (yCheck+radius > yPos && yCheck-radius < yPos+ySize)) {
       visible = !state;
-    } else {
-      visible = state;
-    }
+    } else visible = state;
   }
 
   // If the image is set to be visible, then draw it!
@@ -199,9 +198,7 @@ class ChristmasPresent implements Clickable, Hoverable {
   @Override public void isLit(float xCheck, float yCheck, float radius) {
     if ((xCheck+radius > xPos && xCheck-radius < xPos+xSize) && (yCheck+radius > yPos && yCheck-radius < yPos+ySize)) {
       visible = !state;
-    } else {
-      visible = state;
-    }
+    } else visible = state;
   }
 
   @Override public void onClick(float xCheck, float yCheck) {
@@ -214,5 +211,37 @@ class ChristmasPresent implements Clickable, Hoverable {
       if (collectedPresentsCounter == presentCoordinates.length) cheer.play();
     }
   }
-  
+}
+
+
+
+class GreenArmyPerson implements Hoverable {
+  float xPos, yPos, minX = 107, maxX = 600;
+  PImage img;
+  float xSize = 30, ySize = 30;
+  boolean exposed = false; // Determines whether the light shines on it or not, and if it does, will stop moving.
+
+  GreenArmyPerson(PImage img) {
+    this.img = img;
+
+    // Compute positioning for each person
+    yPos = 620-ySize;
+    xPos = random(minX, maxX);
+
+    hoverableObj.add(this);
+  }
+
+  void freeMove() {
+  }
+
+  void render() {
+    image(img, xPos, yPos, xSize, ySize); // Is always drawn.
+    if (!exposed) freeMove(); // As long as it's not exposed, it will freely move.
+  }
+
+  @Override public void isLit(float xCheck, float yCheck, float radius) {
+    if ((xCheck+radius > xPos && xCheck-radius < xPos+xSize) && (yCheck+radius > yPos && yCheck-radius < yPos+ySize)) {
+      exposed = true;
+    } else exposed = false;
+  }
 }

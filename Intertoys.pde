@@ -8,6 +8,7 @@
 //          Bricks & Planks Textures from cc0-textures.com
 //          Inter-Toys for their logo and branding.
 //          Jingle Bells Music by Otto from Pixabay
+//          Green Army People photos from Victor Buy
 
 
 
@@ -15,6 +16,7 @@
 
 // █░░ █ █▄▄ █▀█ ▄▀█ █▀█ █ █▀▀ █▀
 // █▄▄ █ █▄█ █▀▄ █▀█ █▀▄ █ ██▄ ▄█
+
 
 import processing.sound.*;
 
@@ -29,6 +31,13 @@ import processing.sound.*;
 // What offset from the ground each part of the scene is drawn at.
 float buildingOffset = 565;
 float windowOffset = 400;
+
+
+
+
+// ▄▀█ █▀ █▀ █▀▀ ▀█▀ █▀
+// █▀█ ▄█ ▄█ ██▄ ░█░ ▄█
+
 
 // Background Music
 SoundFile music;
@@ -62,12 +71,26 @@ void setup() {
 void draw() {
   
   background(#FFFFFF);
+  noStroke();
   
-  // Draw the scene itself
-  drawStorefront();
+  // Draw the background scene itself
+  drawBuilding();
+  drawStoreSignHolder();
+  drawStorefrontFrame();
+
+  // Make the entire scene darker (Christmas night <3 )
+  fill(#44000000);
+  rect(0, 0, width, height);
+  
+  // Draw the interactable objects
   drawInteractableObjects();
   
+  // Draw the overlapping part of the storefront
+  drawStoreWindowFrame();
+  
   drawPresentInstructions(); // Gameplay instructions
+  
+  // println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
   
 }
 

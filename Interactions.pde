@@ -9,7 +9,7 @@
 
 
 // Global Variables
-float flashlightRadius = 50;
+float flashlightRadius = 25;
 int collectedPresentsCounter = 0;
 
 // Interaction-Based ArrayLists
@@ -22,27 +22,34 @@ float[][] presentCoordinates = {
   {98, 234},
   {1070, 720},
   {640, 720},
-  {720, 720},
+  {700, 720},
   {370, 708},
   {840, 110},
   {1190, 235},
   {490, 620}
 };
 
+
+
+
+// ▄▀█ █▀ █▀ █▀▀ ▀█▀ █▀
+// █▀█ ▄█ ▄█ ██▄ ░█░ ▄█
+
+
 // Sounds
-SoundFile click;
-SoundFile yay;
-SoundFile cheer;
+SoundFile click, yay, cheer;
 
-// Interactable Object Variables
-StoreSign storeSign;
-StoreSign speelgoedSign;
-StoreSign giftsSign;
-StoreSign gamesSign;
+// Interactable Objects
+StoreSign storeSign, speelgoedSign, giftsSign, gamesSign;
 
+// Hidden Objects
 SecretImage robbers;
 
+// Light Sources
 LightSource flashlight;
+
+// Green Army People Textures Array
+PImage[] gapTextures = new PImage[4];
 
 
 
@@ -65,7 +72,11 @@ void loadInteractableObjects() {
   PImage gamesOff = loadImage("GamesOff.png");
   PImage giftsOn = loadImage("GiftsOn.png");
   PImage giftsOff = loadImage("GiftsOff.png");
-
+  
+  // Loop through all objects of the gapTextures array and load in the respective image dynamically.
+  for (int i = 0; i<gapTextures.length; i++) {
+    gapTextures[i] = loadImage(("GAP"+(i+1)+".png"));
+  }
 
   // Load Sounds In
   click = new SoundFile(this, "Click.mp3");
@@ -78,15 +89,23 @@ void loadInteractableObjects() {
   speelgoedSign = new StoreSign(speelgoodOff, speelgoodOn, true, 90, height-windowOffset-55);
   giftsSign = new StoreSign(giftsOff, giftsOn, true, speelgoedSign.xPos+speelgoedSign.xSize+signGap, height-windowOffset-55);
   gamesSign = new StoreSign(gamesOff, gamesOn, true, giftsSign.xPos+giftsSign.xSize+signGap, height-windowOffset-55);
-
   robbers = new SecretImage(robbersImg, true, 843, 420, 75, 160);
-
-  for (float[] coords : presentCoordinates) {
-    new ChristmasPresent(coords[0], coords[1]);
-    // It is used and saved, but from within the constructor. I don't know how to silence warnings in Processing so it will stay here.
+  
+  
+  // I'm not sure why this warning keeps popping up, but the object is going to be used later on;
+  // Just not from these for-loops, these are only used to create them.
+  
+  // Set up the Green Army People
+  for (int i = 1; i <= 15; i++) {
+    new GreenArmyPerson(gapTextures[floor(random(0,3.99))]);
   }
 
-  flashlight = new LightSource(0, 0, flashlightRadius*2);
+  // Set up the hidden presents around the map
+  for (float[] coords : presentCoordinates) {
+    new ChristmasPresent(coords[0], coords[1]);
+  }
+
+  flashlight = new LightSource(0, 0, flashlightRadius*2.2);
 }
 
 
@@ -121,7 +140,6 @@ void drawPresentInstructions() {
 void drawInteractableObjects() {
 
   // Draw all hoverable objects
-  println(hoverableObj.size());
   for (Hoverable tempObj : hoverableObj) {
     tempObj.render();
   }
