@@ -220,7 +220,7 @@ class GreenArmyPerson implements Hoverable {
   float xPos, yPos, xSize = 30, ySize = 30, minX = 107+xSize, maxX = 600-xSize;
   PImage img;
   boolean exposed = false; // Determines whether the light shines on it or not, and if it does, will stop moving.
-  
+
   // Variables that handle the movement
   int direction = 1;
   float movementSpeed = 0.5;
@@ -231,41 +231,98 @@ class GreenArmyPerson implements Hoverable {
     // Compute positioning for each person
     yPos = 620-ySize;
     xPos = random(minX, maxX);
-    
+
     // Compute random movement speed multiplier
-    movementSpeed = movementSpeed*random(0.8,1.2);
+    movementSpeed = movementSpeed*random(0.8, 1.2);
 
     // Add to hoverable array
     hoverableObj.add(this);
   }
 
   void freeMove() {
-    
+
     // Bounce the GAP off the walls of the windows once it reaches the borders
-    if (xPos>maxX) direction = -1; 
+    if (xPos>maxX) direction = -1;
     if (xPos<minX) direction = 1;
-    
+
     // Move the GAP in the determined direction
     xPos = xPos+ direction*movementSpeed;
-    
   }
 
   void render() {
     if (!exposed) freeMove(); // As long as it's not exposed, it will freely move.
-    
-    println(round(xPos));
-    
+
+    // println(round(xPos));
+
     // Flip the entire "canvas" of each GAP when they're supposed to move the other way around.
     pushMatrix();
-      translate(xPos, yPos);
-      scale(direction,1);
-      image(img, 0, 0, xSize, ySize);
-    popMatrix();  
+    translate(xPos, yPos);
+    scale(direction, 1);
+    image(img, 0, 0, xSize, ySize);
+    popMatrix();
   }
 
   @Override public void isLit(float xCheck, float yCheck, float radius) {
     if ((xCheck+radius > xPos && xCheck-radius < xPos+xSize) && (yCheck+radius > yPos && yCheck-radius < yPos+ySize)) {
       exposed = true;
     } else exposed = false;
+  }
+}
+
+class Food implements Clickable {
+  PImage image;
+  float xPos, yPos, xSize, ySize;
+  boolean visible = true;
+  Food(PImage image, float x, float y, float w, float h) {
+    this.image = image;
+    this.xPos = x;
+    this.yPos = y;
+    this.xSize = w;
+    this.ySize = h;
+    clickableObj.add(this);
+  }
+  void render() {
+    if (visible) {
+      image(image, xPos, yPos, xSize, ySize);
+    }
+  }
+  @Override public void onClick(float xMouse, float yMouse) {
+    if (isInRectBounds(xMouse, yMouse, xPos, yPos, xSize, ySize) && visible) {
+      eatSound.play();
+      visible = false;
+    }
+  }
+}
+
+class Train implements Clickable {
+  PImage trainImage;
+  float xPos, yPos, xSize, ySize;
+
+  // Add in any other fields here
+  boolean moved = false;
+
+  // Add in the constructor here
+  Train(PImage trainImage, float x, float y, float w, float h) {
+    this.trainImage = trainImage;
+    this.xPos = x;
+    this.yPos = y;
+    this.xSize = w;
+    this.ySize = h;
+    clickableObj.add(this);
+  }
+
+  void render() {
+  image(trainImage, xPos, yPos, xSize, ySize);
+  if (xPos < 450 && moved) {
+    xPos = xPos + 2;
+  }
+}
+
+  @Override public void onClick(float xMouse, float yMouse) {
+    if (!moved && isInRectBounds(xMouse, yMouse, xPos, yPos, xSize, ySize)) {
+      moved = true;
+      // Play the whistle sound
+      trainWhistle.play();
+    }
   }
 }

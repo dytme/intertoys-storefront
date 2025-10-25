@@ -15,6 +15,7 @@ int collectedPresentsCounter = 0;
 // Interaction-Based ArrayLists
 ArrayList<Clickable> clickableObj = new ArrayList<>();
 ArrayList<Hoverable> hoverableObj = new ArrayList<>();
+ArrayList<Food> candyCanes = new ArrayList<>();
 
 // An array of coordinates for all of the presents in the game
 float[][] presentCoordinates = {
@@ -37,7 +38,7 @@ float[][] presentCoordinates = {
 
 
 // Sounds
-SoundFile click, yay, cheer;
+SoundFile click, yay, cheer, eatSound, trainWhistle;
 
 // Interactable Objects
 StoreSign storeSign, speelgoedSign, giftsSign, gamesSign;
@@ -50,7 +51,10 @@ LightSource flashlight;
 
 // Green Army People Textures Array
 PImage[] gapTextures = new PImage[4];
-
+// Food
+Food cookie;
+// Train
+Train train;
 
 
 
@@ -61,7 +65,7 @@ PImage[] gapTextures = new PImage[4];
 void loadInteractableObjects() {
 
   // Load Images In
-  PImage train = loadImage("Train.png");
+  PImage trainImage = loadImage("Train.png");
   PImage robbersImg = loadImage("Robbers.png");
 
   PImage storeSignOff = loadImage("StoreSignOff.png");
@@ -72,7 +76,7 @@ void loadInteractableObjects() {
   PImage gamesOff = loadImage("GamesOff.png");
   PImage giftsOn = loadImage("GiftsOn.png");
   PImage giftsOff = loadImage("GiftsOff.png");
-  
+
   // Loop through all objects of the gapTextures array and load in the respective image dynamically.
   for (int i = 0; i<gapTextures.length; i++) {
     gapTextures[i] = loadImage(("GAP"+(i+1)+".png"));
@@ -90,16 +94,22 @@ void loadInteractableObjects() {
   giftsSign = new StoreSign(giftsOff, giftsOn, true, speelgoedSign.xPos+speelgoedSign.xSize+signGap, height-windowOffset-55);
   gamesSign = new StoreSign(gamesOff, gamesOn, true, giftsSign.xPos+giftsSign.xSize+signGap, height-windowOffset-55);
   robbers = new SecretImage(robbersImg, true, 843, 420, 75, 160);
-  
-  
+  cookie = new Food(cookieImage, 641, 425, 90, 90);
+  train = new Train(trainImage, 121, 590, 150, 30);
   // I'm not sure why this warning keeps popping up, but the object is going to be used later on;
   // Just not from these for-loops, these are only used to create them.
-  
+
   // Set up the Green Army People
   for (int i = 1; i <= 15; i++) {
-    new GreenArmyPerson(gapTextures[floor(random(0,3.99))]);
+    new GreenArmyPerson(gapTextures[floor(random(0, 3.99))]);
+  }
+  // Set up Candy Canes
+  for (int i = 0; i <= 6; i++) {
+   Food candyCane = new Food(candyCaneImage, 121+170*i, 340, 80, 80);
+   candyCanes.add(candyCane);
   }
 
+ 
   // Set up the hidden presents around the map
   for (float[] coords : presentCoordinates) {
     new ChristmasPresent(coords[0], coords[1]);
@@ -110,30 +120,29 @@ void loadInteractableObjects() {
 
 
 void drawPresentInstructions() {
-  
+
   // Draw the present counter
   pushMatrix();
-    translate(20, 20);
-    fill(#66000000);
-    rect(0, 0, 300, 40);
-  
-    fill(#FFFFFF);
-    textSize(24);
-    textAlign(CENTER, CENTER);
-    text("Hidden Presents Left: " + Integer.toString(presentCoordinates.length-collectedPresentsCounter), 0, 0, 300, 40);
+  translate(20, 20);
+  fill(#66000000);
+  rect(0, 0, 300, 40);
+
+  fill(#FFFFFF);
+  textSize(24);
+  textAlign(CENTER, CENTER);
+  text("Hidden Presents Left: " + Integer.toString(presentCoordinates.length-collectedPresentsCounter), 0, 0, 300, 40);
   popMatrix();
-  
-    // Draw instructions on what to do
+
+  // Draw instructions on what to do
   pushMatrix();
-    translate(20, 80);
-    fill(#66000000);
-    rect(0, 0, 300, 60);
-  
-    fill(#FFFFFF);
-    textSize(16);
-    text("Use your flashlight to try and find secrets!\nCan you collect all Christmas Presents?", 0, 0, 300, 60);
+  translate(20, 80);
+  fill(#66000000);
+  rect(0, 0, 300, 60);
+
+  fill(#FFFFFF);
+  textSize(16);
+  text("Use your flashlight to try and find secrets!\nCan you collect all Christmas Presents?", 0, 0, 300, 60);
   popMatrix();
-  
 }
 
 
@@ -143,16 +152,19 @@ void drawInteractableObjects() {
   for (Hoverable tempObj : hoverableObj) {
     tempObj.render();
   }
-  
+
   // Draw interactable objects
   storeSign.render();
   speelgoedSign.render();
   giftsSign.render();
   gamesSign.render();
-
+  for (Food candyCane:candyCanes) {
+    candyCane.render();
+  }
+  cookie.render();
   // Draw the flashlight's light
   flashlight.render();
-  
+  train.render();
 }
 
 
