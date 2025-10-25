@@ -4,8 +4,8 @@
 
 
 
-// █░█ ▄▀█ █▀█ █ ▄▀█ █▄▄ █░░ █▀▀ █▀
-// ▀▄▀ █▀█ █▀▄ █ █▀█ █▄█ █▄▄ ██▄ ▄█
+// ▄▀█ █▀ █▀ █▀▀ ▀█▀ █▀
+// █▀█ ▄█ ▄█ ██▄ ░█░ ▄█
 
 
 // Shadows & Gradients
@@ -31,7 +31,7 @@ TiledImage christmasGarland;
 TiledImage shelfGarland;
 
 
-// Image Assets
+// Standalone Images
 PImage christmasTree;
 
 
@@ -154,8 +154,24 @@ void drawStorefrontFrame() {
     // Render the fake windows for the door frame.
     fill(#576B90);
     rect(planksWall.xPos+planksWall.xSize/2, 0, planksWall.xSize/2, planksWall.ySize);
+
+    // Pillars
+    leftPillar.render();
+    image(leftGradient, 70, 0, 12, windowOffset);
   
-    // Window Frame
+    middlePillar.render();
+    rightPillar.render();
+  
+    image(rightGradient, width-70-12, 0, 12, windowOffset);
+
+  popMatrix();
+}
+
+void drawStoreWindowFrame() {
+  pushMatrix();
+  translate(0, height-windowOffset);
+
+  // Window Frame
     fill(#E0DB5A);
   
     rect(leftPillar.xSize, 0, 520, 12);
@@ -166,10 +182,9 @@ void drawStorefrontFrame() {
     rect(leftPillar.xSize+508, 0, 12, windowOffset);
   
   
-    // Door Frame
-    rect(width/2, 0, width/2, 12);
-  
+  // Door Frame
     float leftFrameXOffset = middlePillar.xPos+middlePillar.xSize;
+    rect(leftFrameXOffset, 0, 440, 12);
     rect(leftFrameXOffset, 0, 12, windowOffset);
     rect(leftFrameXOffset, windowOffset-12, 12+64, 12);
     rect(leftFrameXOffset+64, 0, 36, windowOffset);
@@ -177,49 +192,24 @@ void drawStorefrontFrame() {
   
     float rightFrameXOffset = width-rightPillar.xSize;
     rect(rightFrameXOffset-12, 0, 12, windowOffset);
-    rect(rightFrameXOffset-64, windowOffset-12, 12+64, 12);
+    rect(rightFrameXOffset-80, windowOffset-12, 12+64, 12);
     rect(rightFrameXOffset-64-36, 0, 36, windowOffset);
     image(leftGradient, rightFrameXOffset-64-4-8, 0, 8, windowOffset);
   
-    // Sliding Doors
+  // Sliding Doors
     noFill();
     stroke(#4C4C4C);
     strokeWeight(8);
     rect(leftFrameXOffset+104, 16, 121-4, 380);
     rect(leftFrameXOffset+104+121+4, 16, 121-4, 380);
-  
+    
     noStroke();
-  
-    // Pillars
-    leftPillar.render();
-    image(leftGradient, 70, 0, 12, windowOffset);
-  
-    middlePillar.render();
-    rightPillar.render();
-  
-    image(rightGradient, width-70-12, 0, 12, windowOffset);
-  
+    
     // Shadow between sign holder and window frames
     addVariableGradient(topGradient, 3, panelJoint.xPos, 0, panelJoint.xSize, 24);
     
     // Window Decorations
     christmasGarland.render();
     image(christmasTree, middlePillar.xPos-30,windowOffset-231);
-
   popMatrix();
-}
-
-
-void drawStorefront() {
-
-  noStroke();
-
-  // Call upon each part of the storefront to be rendered
-  drawBuilding();
-  drawStoreSignHolder();
-  drawStorefrontFrame();
-
-  // Make the entire scene darker (Christmas night <3 )
-  fill(#44000000);
-  rect(0, 0, width, height);
 }
