@@ -1,4 +1,3 @@
-
 // Visual Aspect + Decorations for the Storefront
 
 
@@ -30,8 +29,8 @@ TiledImage secondFloorWindow;
 TiledImage christmasGarland;
 TiledImage shelfGarland;
 
-
 // Standalone Images
+PImage easterEggImage;
 PImage christmasTree;
 
 
@@ -62,10 +61,10 @@ void loadStorefrontAssets() {
   PImage pillarTexture = loadImage("PillarTexture.png");
   PImage panelJointTexture = loadImage("PanelJoint.png");
   PImage secondFloorWindowTexture = loadImage("SecondFloorWindow.png");
-  
+
   PImage christmasGarlandTexture = loadImage("Garland.png");
   christmasTree = loadImage("Christmas Tree.png");
-
+  easterEgg = loadImage("easterEgg.png");
   // Compute and save the textures
   brickWall = new TiledImage(brickWallTexture, 0, 0, width, height, 100, 100);
   planksWall = new TiledImage(planksWallTexture, 0, height-400, width, 400, 250, 250);
@@ -77,7 +76,6 @@ void loadStorefrontAssets() {
   leftPillar = new TiledImage(pillarTexture, 0, 0, 95, windowOffset, 35, 35);
   middlePillar = new TiledImage(pillarTexture, leftPillar.xSize+520, 0, 120, windowOffset, 35, 35);
   rightPillar = new TiledImage(pillarTexture, width-95, 0, 95, windowOffset, 35, 35);
-
 }
 
 
@@ -110,7 +108,6 @@ void drawBuilding() {
   rect(planksWall.xPos, height-100, planksWall.xSize/2, 8);
   addVariableGradient(topGradient, 3, 0, height-92, planksWall.xSize/2, 36);
   shelfGarland.render();
-  
 }
 
 
@@ -118,29 +115,29 @@ void drawBuilding() {
 void drawStoreSignHolder() {
   pushMatrix();
   translate(0, height-buildingOffset);
-  
-    // Connection Between Store and Building
-    fill(#D9D9D9);
-    rect(0, 0, width, 165);
-    image(topGradient, 0, 32, width, 8);
-  
-    fill(#4C4C4C);
-    rect(0, 16, width, 16);
-    image(topGradient, 0, 16, width, 8);
-  
-    // Sign Holder
-    fill(#9A9C97);
-    rect(panelJoint.xPos, panelJoint.yPos, panelJoint.xSize, panelJoint.ySize);
-    panelJoint.render();
-  
-    fill(#F6F6F6);
-    rect(0, 0, width, 16);
-    image(topGradient, 0, 0, width, 8);
-    rect(panelJoint.xPos, panelJoint.yPos, panelJoint.xSize, 8);
-    image(topGradient, panelJoint.xPos, panelJoint.yPos+8, panelJoint.xSize, 8);
-  
-    image(rightGradient, panelJoint.xPos-12, panelJoint.yPos, 12, panelJoint.ySize);
-    image(leftGradient, panelJoint.xPos+panelJoint.xSize, panelJoint.yPos, 12, panelJoint.ySize);
+
+  // Connection Between Store and Building
+  fill(#D9D9D9);
+  rect(0, 0, width, 165);
+  image(topGradient, 0, 32, width, 8);
+
+  fill(#4C4C4C);
+  rect(0, 16, width, 16);
+  image(topGradient, 0, 16, width, 8);
+
+  // Sign Holder
+  fill(#9A9C97);
+  rect(panelJoint.xPos, panelJoint.yPos, panelJoint.xSize, panelJoint.ySize);
+  panelJoint.render();
+
+  fill(#F6F6F6);
+  rect(0, 0, width, 16);
+  image(topGradient, 0, 0, width, 8);
+  rect(panelJoint.xPos, panelJoint.yPos, panelJoint.xSize, 8);
+  image(topGradient, panelJoint.xPos, panelJoint.yPos+8, panelJoint.xSize, 8);
+
+  image(rightGradient, panelJoint.xPos-12, panelJoint.yPos, 12, panelJoint.ySize);
+  image(leftGradient, panelJoint.xPos+panelJoint.xSize, panelJoint.yPos, 12, panelJoint.ySize);
 
   popMatrix();
 }
@@ -150,19 +147,19 @@ void drawStoreSignHolder() {
 void drawStorefrontFrame() {
   pushMatrix();
   translate(0, height-windowOffset);
-  
-    // Render the fake windows for the door frame.
-    fill(#576B90);
-    rect(planksWall.xPos+planksWall.xSize/2, 0, planksWall.xSize/2, planksWall.ySize);
 
-    // Pillars
-    leftPillar.render();
-    image(leftGradient, 70, 0, 12, windowOffset);
-  
-    middlePillar.render();
-    rightPillar.render();
-  
-    image(rightGradient, width-70-12, 0, 12, windowOffset);
+  // Render the fake windows for the door frame.
+  fill(#576B90);
+  rect(planksWall.xPos+planksWall.xSize/2, 0, planksWall.xSize/2, planksWall.ySize);
+
+  // Pillars
+  leftPillar.render();
+  image(leftGradient, 70, 0, 12, windowOffset);
+
+  middlePillar.render();
+  rightPillar.render();
+
+  image(rightGradient, width-70-12, 0, 12, windowOffset);
 
   popMatrix();
 }
@@ -172,44 +169,95 @@ void drawStoreWindowFrame() {
   translate(0, height-windowOffset);
 
   // Window Frame
-    fill(#E0DB5A);
-  
-    rect(leftPillar.xSize, 0, 520, 12);
-    rect(leftPillar.xSize, windowOffset-12, 520, 12);
-  
-    rect(leftPillar.xSize, 0, 12, windowOffset);
-    rect(leftPillar.xSize+254, 0, 12, windowOffset);
-    rect(leftPillar.xSize+508, 0, 12, windowOffset);
-  
-  
+  fill(#E0DB5A);
+
+  rect(leftPillar.xSize, 0, 520, 12);
+  rect(leftPillar.xSize, windowOffset-12, 520, 12);
+
+  rect(leftPillar.xSize, 0, 12, windowOffset);
+  rect(leftPillar.xSize+254, 0, 12, windowOffset);
+  rect(leftPillar.xSize+508, 0, 12, windowOffset);
+
+
   // Door Frame
-    float leftFrameXOffset = middlePillar.xPos+middlePillar.xSize;
-    rect(leftFrameXOffset, 0, 440, 12);
-    rect(leftFrameXOffset, 0, 12, windowOffset);
-    rect(leftFrameXOffset, windowOffset-12, 12+64, 12);
-    rect(leftFrameXOffset+64, 0, 36, windowOffset);
-    image(rightGradient, leftFrameXOffset+64+4, 0, 8, windowOffset);
-  
-    float rightFrameXOffset = width-rightPillar.xSize;
-    rect(rightFrameXOffset-12, 0, 12, windowOffset);
-    rect(rightFrameXOffset-80, windowOffset-12, 12+64, 12);
-    rect(rightFrameXOffset-64-36, 0, 36, windowOffset);
-    image(leftGradient, rightFrameXOffset-64-4-8, 0, 8, windowOffset);
-  
+  float leftFrameXOffset = middlePillar.xPos+middlePillar.xSize;
+  rect(leftFrameXOffset, 0, 440, 12);
+  rect(leftFrameXOffset, 0, 12, windowOffset);
+  rect(leftFrameXOffset, windowOffset-12, 12+64, 12);
+  rect(leftFrameXOffset+64, 0, 36, windowOffset);
+  image(rightGradient, leftFrameXOffset+64+4, 0, 8, windowOffset);
+
+  float rightFrameXOffset = width-rightPillar.xSize;
+  rect(rightFrameXOffset-12, 0, 12, windowOffset);
+  rect(rightFrameXOffset-80, windowOffset-12, 12+64, 12);
+  rect(rightFrameXOffset-64-36, 0, 36, windowOffset);
+  image(leftGradient, rightFrameXOffset-64-4-8, 0, 8, windowOffset);
+
   // Sliding Doors
-    noFill();
-    stroke(#4C4C4C);
-    strokeWeight(8);
-    rect(leftFrameXOffset+104, 16, 121-4, 380);
-    rect(leftFrameXOffset+104+121+4, 16, 121-4, 380);
-    
-    noStroke();
-    
-    // Shadow between sign holder and window frames
-    addVariableGradient(topGradient, 3, panelJoint.xPos, 0, panelJoint.xSize, 24);
-    
-    // Window Decorations
-    christmasGarland.render();
-    image(christmasTree, middlePillar.xPos-30,windowOffset-231);
+  noFill();
+  stroke(#4C4C4C);
+  strokeWeight(8);
+  rect(leftFrameXOffset+104, 16, 121-4, 380);
+  rect(leftFrameXOffset+104+121+4, 16, 121-4, 380);
+
+  noStroke();
+
+  // Shadow between sign holder and window frames
+  addVariableGradient(topGradient, 3, panelJoint.xPos, 0, panelJoint.xSize, 24);
+
+  // Window Decorations
+  christmasGarland.render();
+  image(christmasTree, middlePillar.xPos-30, windowOffset-231);
   popMatrix();
+}
+
+// Konami code inputs
+
+int[] konamiSequence = {
+  UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT
+};
+char[] konamiChars = {'b', 'a'};
+ArrayList<Integer> konamiInput = new ArrayList<Integer>();
+boolean displayEasterEgg = false;
+int konamiProgress = 0;
+
+// draw easter egg last
+{
+  if (displayEasterEgg) {
+    pushMatrix();
+    imageMode(CENTER);
+    image(easterEggImage, 500, 500);
+    popMatrix();
+  }
+}
+void keyPressed() {
+  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
+    konamiInput.add(keyCode);
+
+    // keep last 8 inputs
+    if (konamiInput.size() > konamiSequence.length) {
+      konamiInput.remove(0);
+    }
+  }
+
+  // Check if arrows match
+  if (konamiInput.size() == konamiSequence.length) {
+    boolean sequenceMatch = true;
+    for (int i = 0; i < konamiSequence.length; i++) {
+      if (konamiInput.get(i) != konamiSequence[i]) {
+        sequenceMatch = false;
+        break;
+      }
+    }
+    // if arrow matches
+    if (sequenceMatch) {
+      // look for B and A
+      if (key == 'b' || key == 'B') {
+        konamiProgress = 1;
+      } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
+        displayEasterEgg = true; // display easter egg image
+        println("easter egg displayed");
+      }
+    }
+  }
 }
