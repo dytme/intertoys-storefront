@@ -64,7 +64,7 @@ void loadStorefrontAssets() {
 
   PImage christmasGarlandTexture = loadImage("Garland.png");
   christmasTree = loadImage("Christmas Tree.png");
-  easterEgg = loadImage("easterEgg.png");
+  easterEggImage = loadImage("easterEggImage.png");
   // Compute and save the textures
   brickWall = new TiledImage(brickWallTexture, 0, 0, width, height, 100, 100);
   planksWall = new TiledImage(planksWallTexture, 0, height-400, width, 400, 250, 250);
@@ -257,6 +257,8 @@ void keyPressed() {
       } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
         displayEasterEgg = true; // display easter egg image
         println("easter egg displayed");
+        SoundFile vineBoom = new SoundFile(this, "vineboom.mp3");
+        vineBoom.play();
       }
     }
   }

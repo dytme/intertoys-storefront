@@ -99,7 +99,9 @@ void draw() {
   
   drawPresentInstructions(); // Gameplay instructions
   
-  
+  if (displayEasterEgg) {
+    image(easterEggImage, 370, 28, 82, 82);
+  }
   // println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
 
 }
