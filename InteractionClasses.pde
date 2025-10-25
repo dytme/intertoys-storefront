@@ -253,7 +253,7 @@ class GreenArmyPerson implements Hoverable {
   void render() {
     if (!exposed) freeMove(); // As long as it's not exposed, it will freely move.
     
-    println(round(xPos));
+   // println(round(xPos));
     
     // Flip the entire "canvas" of each GAP when they're supposed to move the other way around.
     pushMatrix();
