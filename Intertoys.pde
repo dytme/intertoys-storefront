@@ -72,7 +72,7 @@ void setup() {
  
  // Global eating sound
  eatSound = new SoundFile(this, "eating.mp3");
- 
+ trainWhistle = new SoundFile(this, "trainWhistle.mp3");
 }
 
 

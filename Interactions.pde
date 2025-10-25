@@ -38,7 +38,7 @@ float[][] presentCoordinates = {
 
 
 // Sounds
-SoundFile click, yay, cheer, eatSound;
+SoundFile click, yay, cheer, eatSound, trainWhistle;
 
 // Interactable Objects
 StoreSign storeSign, speelgoedSign, giftsSign, gamesSign;
@@ -53,6 +53,8 @@ LightSource flashlight;
 PImage[] gapTextures = new PImage[4];
 // Food
 Food cookie;
+// Train
+Train train;
 
 
 
@@ -63,7 +65,7 @@ Food cookie;
 void loadInteractableObjects() {
 
   // Load Images In
-  PImage train = loadImage("Train.png");
+  PImage trainImage = loadImage("Train.png");
   PImage robbersImg = loadImage("Robbers.png");
 
   PImage storeSignOff = loadImage("StoreSignOff.png");
@@ -93,6 +95,7 @@ void loadInteractableObjects() {
   gamesSign = new StoreSign(gamesOff, gamesOn, true, giftsSign.xPos+giftsSign.xSize+signGap, height-windowOffset-55);
   robbers = new SecretImage(robbersImg, true, 843, 420, 75, 160);
   cookie = new Food(cookieImage, 641, 425, 90, 90);
+  train = new Train(trainImage, 121, 590, 150, 30);
   // I'm not sure why this warning keeps popping up, but the object is going to be used later on;
   // Just not from these for-loops, these are only used to create them.
 
@@ -161,6 +164,7 @@ void drawInteractableObjects() {
   cookie.render();
   // Draw the flashlight's light
   flashlight.render();
+  train.render();
 }
 
 
