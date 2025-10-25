@@ -30,23 +30,10 @@ TiledImage secondFloorWindow;
 TiledImage christmasGarland;
 TiledImage shelfGarland;
 
-PImage easterEggImage;
-TiledImage easterEggTile;
 
-<<<<<<< Updated upstream
 // Standalone Images
 PImage christmasTree;
-=======
-// Konami code inputs
->>>>>>> Stashed changes
 
-int[] konamiSequence = {
-  UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT
-};
-char[] konamiChars = {'b', 'a'};
-ArrayList<Integer> konamiInput = new ArrayList<Integer>();
-boolean displayEasterEgg = false;
-int konamiProgress = 0;
 
 
 
@@ -226,69 +213,3 @@ void drawStoreWindowFrame() {
     image(christmasTree, middlePillar.xPos-30,windowOffset-231);
   popMatrix();
 }
-<<<<<<< Updated upstream
-=======
-
-
-void drawStorefront() {
-
-  noStroke();
-
-  drawBuilding();
-  drawStoreSign();
-  drawStorefrontFrame();
-
-  
-  
-
-  // Make the entire scene darker (Christmas night <3 )
-  fill(#44000000);
-  rect(0, 0, width, height);
-  
-  // draw easter egg last 
-
-if (displayEasterEgg) {
-  pushMatrix();
-  imageMode(CENTER);
-  image(easterEggImage, 500, 500);
-  popMatrix();
-}
-}
-void keyPressed() {
-  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
-    konamiInput.add(keyCode);
-    
-    // keep last 8 inputs
-    if (konamiInput.size() > konamiSequence.length) {
-      konamiInput.remove(0);
-    }
-  }
-  
-  // Check if arrows match
-  if (konamiInput.size() == konamiSequence.length) {
-    boolean sequenceMatch = true;
-    for (int i = 0; i < konamiSequence.length; i++) {
-      if (konamiInput.get(i) != konamiSequence[i]) {
-        sequenceMatch = false;
-        break;
-      }
-    }
-  // if arrow matches
-  if (sequenceMatch) {
-    // look for B and A
-    if (key == 'b' || key == 'B') {
-      konamiProgress = 1;
-    } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
-      displayEasterEgg = true; // display easter egg image
-      println("easter egg displayed");
-    }
-  }
-  }
-}
-
-
-
-
-// █▀▀ █░░ ▄▀█ █▀ █▀ █▀▀ █▀
-// █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
->>>>>>> Stashed changes
