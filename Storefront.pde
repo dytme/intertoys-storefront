@@ -33,11 +33,23 @@ PImage secondFloorWindowTexture;
 TiledImage secondFloorWindow;
 
 
+<<<<<<< Updated upstream
 // Global Positions
 
 // What offset from the ground each part of the scene is drawn at.
 float buildingOffset = 565;
 float windowOffset = 400;
+=======
+
+
+
+// Standalone Images
+PImage christmasTree;
+PImage easterEggImage;
+
+// Konami code inputs
+
+>>>>>>> Stashed changes
 
 
 
@@ -65,11 +77,22 @@ void loadStorefrontAssets() {
   bottomGradient = loadImage("BottomGradient.png");
 
   // Load in images
+<<<<<<< Updated upstream
   brickWallTexture = loadImage("BrickWallTexture.png");
   planksWallTexture = loadImage("PlanksWallTexture.png");
   pillarTexture = loadImage("PillarTexture.png");
   panelJointTexture = loadImage("PanelJoint.png");
   secondFloorWindowTexture = loadImage("SecondFloorWindow.png");
+=======
+  PImage brickWallTexture = loadImage("BrickWallTexture.png");
+  PImage planksWallTexture = loadImage("PlanksWallTexture.png");
+  PImage pillarTexture = loadImage("PillarTexture.png");
+  PImage panelJointTexture = loadImage("PanelJoint.png");
+  PImage secondFloorWindowTexture = loadImage("SecondFloorWindow.png");
+  PImage christmasGarlandTexture = loadImage("Garland.png");
+  easterEggImage = loadImage("easterEgg.png");
+  christmasTree = loadImage("Christmas Tree.png");
+>>>>>>> Stashed changes
 
   // Compute and save the textures
   brickWall = new TiledImage(brickWallTexture, 0, 0, width, height, 100, 100);
@@ -177,7 +200,41 @@ void drawStorefront() {
 
 
   // Door Frame
+<<<<<<< Updated upstream
   rect(width/2, 0, width/2, 12);
+=======
+    float leftFrameXOffset = middlePillar.xPos+middlePillar.xSize;
+    rect(leftFrameXOffset, 0, 440, 12);
+    rect(leftFrameXOffset, 0, 12, windowOffset);
+    rect(leftFrameXOffset, windowOffset-12, 12+64, 12);
+    rect(leftFrameXOffset+64, 0, 36, windowOffset);
+    image(rightGradient, leftFrameXOffset+64+4, 0, 8, windowOffset);
+  
+    float rightFrameXOffset = width-rightPillar.xSize;
+    rect(rightFrameXOffset-12, 0, 12, windowOffset);
+    rect(rightFrameXOffset-80, windowOffset-12, 12+64, 12);
+    rect(rightFrameXOffset-64-36, 0, 36, windowOffset);
+    image(leftGradient, rightFrameXOffset-64-4-8, 0, 8, windowOffset);
+  
+  // Sliding Doors
+    noFill();
+    stroke(#4C4C4C);
+    strokeWeight(8);
+    rect(leftFrameXOffset+104, 16, 121-4, 380);
+    rect(leftFrameXOffset+104+121+4, 16, 121-4, 380);
+    
+    noStroke();
+    
+    // Shadow between sign holder and window frames
+    addVariableGradient(topGradient, 3, panelJoint.xPos, 0, panelJoint.xSize, 24);
+    
+    // Window Decorations
+    christmasGarland.render();
+    image(christmasTree, middlePillar.xPos-30,windowOffset-231);
+  popMatrix();
+}
+
+>>>>>>> Stashed changes
 
   float leftFrameXOffset = middlePillar.xPos+middlePillar.xSize;
   rect(leftFrameXOffset, 0, 12, windowOffset);
@@ -199,6 +256,12 @@ void drawStorefront() {
 
   noStroke();
 
+<<<<<<< Updated upstream
+=======
+  drawBuilding();
+  drawStoreSignHolder();
+  drawStorefrontFrame();
+>>>>>>> Stashed changes
 
 
   // Pillars
@@ -219,6 +282,51 @@ void drawStorefront() {
   // Make the entire scene darker (Christmas night <3 )
   fill(#44000000);
   rect(0, 0, width, height);
+<<<<<<< Updated upstream
+=======
+  
+  // draw easter egg last 
+
+if (displayEasterEgg) {
+  pushMatrix();
+  imageMode(CENTER);
+  image(easterEggImage, 500, 500);
+  popMatrix();
+}
+}
+void keyPressed() {
+  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
+    konamiInput.add(keyCode);
+    
+    // keep last 8 inputs
+    if (konamiInput.size() > konamiSequence.length) {
+      konamiInput.remove(0);
+    }
+  }
+  
+  // Check if arrows match
+  if (konamiInput.size() == konamiSequence.length) {
+    boolean sequenceMatch = true;
+    for (int i = 0; i < konamiSequence.length; i++) {
+      if (konamiInput.get(i) != konamiSequence[i]) {
+        sequenceMatch = false;
+        break;
+      }
+    }
+  // if arrow matches
+  if (sequenceMatch) {
+    // look for B and A
+    if (key == 'b' || key == 'B') {
+      konamiProgress = 1;
+    } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
+      displayEasterEgg = true; // display easter egg image
+      println("easter egg displayed");
+      SoundFile vineBoom = new SoundFile(this, "vineboom.mp3");
+      vineBoom.play();
+    }
+  }
+  }
+>>>>>>> Stashed changes
 }
 
 
@@ -226,6 +334,7 @@ void drawStorefront() {
 
 // █▀▀ █░░ ▄▀█ █▀ █▀ █▀▀ █▀
 // █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
+<<<<<<< Updated upstream
 
 // TO DO -- determine if this is even worth it lol
 
@@ -264,3 +373,5 @@ class TextObject {
     popMatrix();
   }
 }
+=======
+>>>>>>> Stashed changes
