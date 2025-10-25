@@ -7,7 +7,7 @@
 //          Cheer Sound Effect by DRAGON-STUDIO from Pixabay
 //          Bricks & Planks Textures from cc0-textures.com
 //          Inter-Toys for their logo and branding.
-//          Jingle Bells Music by Otto from Pixabay
+//          Johnny Mathis – It's Beginning To Look Alot Like Christmas Courtesy of Ceenaija.com
 //          Green Army People photos from Victor Buy
 
 
@@ -31,6 +31,11 @@ import processing.sound.*;
 // What offset from the ground each part of the scene is drawn at.
 float buildingOffset = 565;
 float windowOffset = 400;
+
+// The last registered values of MouseX and MouseY
+// Needed in order to check whether moving interactable objects will eventually end up being lit up by the flashlight,
+// but without constantly checking the new mouse position on draw();
+float lastMouseX, lastMouseY;
 
 
 
@@ -61,7 +66,7 @@ void setup() {
  loadInteractableObjects();
  
  // Handle the background music
- music = new SoundFile(this, "JingleBells.mp3");
+ music = new SoundFile(this, "ALotLikeChristmas.mp3");
  music.amp(0.2);
  music.loop();
  
@@ -85,13 +90,17 @@ void draw() {
   // Draw the interactable objects
   drawInteractableObjects();
   
+  for (Hoverable tempObj : hoverableObj) {
+    tempObj.isLit(mouseX, mouseY, flashlightRadius);
+  }
+  
   // Draw the overlapping part of the storefront
   drawStoreWindowFrame();
   
   drawPresentInstructions(); // Gameplay instructions
   
   // println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
-  
+
 }
 
 
@@ -118,7 +127,6 @@ void mousePressed() {
 
 void mouseMoved() {
   flashlight.move(mouseX, mouseY);
-  for (Hoverable tempObj : hoverableObj) {
-    tempObj.isLit(mouseX, mouseY, flashlightRadius);
-  }
+  lastMouseX = mouseX;
+  lastMouseY = mouseY;
 }
