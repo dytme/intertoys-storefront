@@ -81,12 +81,6 @@ void loadStorefrontAssets() {
 }
 
 
-void drawTilePillar(float xPos, float yPos, float xSize, float ySize) {
-  fill(#9A9C97);
-  rect(xPos, yPos, xSize, ySize);
-}
-
-
 // Render the second floor
 void drawBuilding() {
 
