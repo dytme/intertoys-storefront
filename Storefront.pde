@@ -32,8 +32,8 @@ TiledImage shelfGarland;
 // Standalone Images
 PImage easterEggImage;
 PImage christmasTree;
-
-
+PImage candyCaneImage;
+PImage cookieImage;
 
 
 // █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
@@ -65,6 +65,8 @@ void loadStorefrontAssets() {
   PImage christmasGarlandTexture = loadImage("Garland.png");
   christmasTree = loadImage("Christmas Tree.png");
   easterEggImage = loadImage("easterEggImage.png");
+  candyCaneImage = loadImage("candyCane.png");
+  cookieImage = loadImage("cookie.png");
   // Compute and save the textures
   brickWall = new TiledImage(brickWallTexture, 0, 0, width, height, 100, 100);
   planksWall = new TiledImage(planksWallTexture, 0, height-400, width, 400, 250, 250);
@@ -220,46 +222,3 @@ char[] konamiChars = {'b', 'a'};
 ArrayList<Integer> konamiInput = new ArrayList<Integer>();
 boolean displayEasterEgg = false;
 int konamiProgress = 0;
-
-// draw easter egg last
-{
-  if (displayEasterEgg) {
-    pushMatrix();
-    imageMode(CENTER);
-    image(easterEggImage, 500, 500);
-    popMatrix();
-  }
-}
-void keyPressed() {
-  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
-    konamiInput.add(keyCode);
-
-    // keep last 8 inputs
-    if (konamiInput.size() > konamiSequence.length) {
-      konamiInput.remove(0);
-    }
-  }
-
-  // Check if arrows match
-  if (konamiInput.size() == konamiSequence.length) {
-    boolean sequenceMatch = true;
-    for (int i = 0; i < konamiSequence.length; i++) {
-      if (konamiInput.get(i) != konamiSequence[i]) {
-        sequenceMatch = false;
-        break;
-      }
-    }
-    // if arrow matches
-    if (sequenceMatch) {
-      // look for B and A
-      if (key == 'b' || key == 'B') {
-        konamiProgress = 1;
-      } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
-        displayEasterEgg = true; // display easter egg image
-        println("easter egg displayed");
-        SoundFile vineBoom = new SoundFile(this, "vineboom.mp3");
-        vineBoom.play();
-      }
-    }
-  }
-}

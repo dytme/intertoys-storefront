@@ -70,6 +70,9 @@ void setup() {
  music.amp(0.2);
  music.loop();
  
+ // Global eating sound
+ eatSound = new SoundFile(this, "eating.mp3");
+ 
 }
 
 
@@ -102,7 +105,7 @@ void draw() {
   if (displayEasterEgg) {
     image(easterEggImage, 370, 28, 82, 82);
   }
-  // println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
+   println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
 
 }
 
@@ -132,4 +135,38 @@ void mouseMoved() {
   flashlight.move(mouseX, mouseY);
   lastMouseX = mouseX;
   lastMouseY = mouseY;
+}
+
+void keyPressed() {
+  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
+    konamiInput.add(keyCode);
+
+    // keep last 8 inputs
+    if (konamiInput.size() > konamiSequence.length) {
+      konamiInput.remove(0);
+    }
+  }
+
+  // Check if arrows match
+  if (konamiInput.size() == konamiSequence.length) {
+    boolean sequenceMatch = true;
+    for (int i = 0; i < konamiSequence.length; i++) {
+      if (konamiInput.get(i) != konamiSequence[i]) {
+        sequenceMatch = false;
+        break;
+      }
+    }
+    // if arrow matches
+    if (sequenceMatch) {
+      // look for B and A
+      if (key == 'b' || key == 'B') {
+        konamiProgress = 1;
+      } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
+        displayEasterEgg = true; // display easter egg image
+        println("easter egg displayed");
+        SoundFile vineBoom = new SoundFile(this, "vineboom.mp3");
+        vineBoom.play();
+      }
+    }
+  }
 }
