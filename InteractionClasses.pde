@@ -19,6 +19,7 @@ boolean isInRectBounds(float xCheck, float yCheck, float xPos, float yPos, float
 
 
 
+
 // █▀▀ █░░ ▄▀█ █▀ █▀ █▀▀ █▀
 // █▄▄ █▄▄ █▀█ ▄█ ▄█ ██▄ ▄█
 
@@ -216,10 +217,13 @@ class ChristmasPresent implements Clickable, Hoverable {
 
 
 class GreenArmyPerson implements Hoverable {
-  float xPos, yPos, minX = 107, maxX = 600;
+  float xPos, yPos, xSize = 30, ySize = 30, minX = 107+xSize, maxX = 600-xSize;
   PImage img;
-  float xSize = 30, ySize = 30;
   boolean exposed = false; // Determines whether the light shines on it or not, and if it does, will stop moving.
+  
+  // Variables that handle the movement
+  int direction = 1;
+  float movementSpeed = 0.5;
 
   GreenArmyPerson(PImage img) {
     this.img = img;
@@ -227,16 +231,36 @@ class GreenArmyPerson implements Hoverable {
     // Compute positioning for each person
     yPos = 620-ySize;
     xPos = random(minX, maxX);
+    
+    // Compute random movement speed multiplier
+    movementSpeed = movementSpeed*random(0.8,1.2);
 
+    // Add to hoverable array
     hoverableObj.add(this);
   }
 
   void freeMove() {
+    
+    // Bounce the GAP off the walls of the windows once it reaches the borders
+    if (xPos>maxX) direction = -1; 
+    if (xPos<minX) direction = 1;
+    
+    // Move the GAP in the determined direction
+    xPos = xPos+ direction*movementSpeed;
+    
   }
 
   void render() {
-    image(img, xPos, yPos, xSize, ySize); // Is always drawn.
     if (!exposed) freeMove(); // As long as it's not exposed, it will freely move.
+    
+    println(round(xPos));
+    
+    // Flip the entire "canvas" of each GAP when they're supposed to move the other way around.
+    pushMatrix();
+      translate(xPos, yPos);
+      scale(direction,1);
+      image(img, 0, 0, xSize, ySize);
+    popMatrix();  
   }
 
   @Override public void isLit(float xCheck, float yCheck, float radius) {

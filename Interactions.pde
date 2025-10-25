@@ -20,12 +20,12 @@ ArrayList<Hoverable> hoverableObj = new ArrayList<>();
 float[][] presentCoordinates = {
   {110, 620},
   {98, 234},
-  {1070, 720},
+  {1020, 720},
   {640, 720},
   {700, 720},
   {370, 708},
   {840, 110},
-  {1190, 235},
+  {1150, 235},
   {490, 620}
 };
 
