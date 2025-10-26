@@ -11,10 +11,17 @@
 // Global Variables
 float flashlightRadius = 25;
 int collectedPresentsCounter = 0;
+int konamiProgress = 0;
+boolean displayEasterEgg = false;
 
 // Interaction-Based ArrayLists
 ArrayList<Clickable> clickableObj = new ArrayList<>();
 ArrayList<Hoverable> hoverableObj = new ArrayList<>();
+<<<<<<< Updated upstream
+=======
+ArrayList<Food> candyCanes = new ArrayList<>();
+ArrayList<Integer> konamiInput = new ArrayList<Integer>();
+>>>>>>> Stashed changes
 
 // An array of coordinates for all of the presents in the game
 float[][] presentCoordinates = {
@@ -29,6 +36,14 @@ float[][] presentCoordinates = {
   {490, 620}
 };
 
+// Konami Code Inputs
+int[] konamiSequence = {
+  UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT
+};
+char[] konamiChars = {'b', 'a'};
+
+
+
 
 
 
@@ -38,6 +53,9 @@ float[][] presentCoordinates = {
 
 // Sounds
 SoundFile click, yay, cheer;
+
+// Images
+PImage easterEggImage;
 
 // Interactable Objects
 StoreSign storeSign, speelgoedSign, giftsSign, gamesSign;
@@ -50,6 +68,15 @@ LightSource flashlight;
 
 // Green Army People Textures Array
 PImage[] gapTextures = new PImage[4];
+
+<<<<<<< Updated upstream
+=======
+// Food Objects
+Food cookie;
+
+// Train Object
+Train train;
+>>>>>>> Stashed changes
 
 
 
@@ -73,6 +100,13 @@ void loadInteractableObjects() {
   PImage giftsOn = loadImage("GiftsOn.png");
   PImage giftsOff = loadImage("GiftsOff.png");
   
+<<<<<<< Updated upstream
+=======
+  easterEggImage = loadImage("easterEggImage.png");
+  PImage candyCaneImage = loadImage("candyCane.png");
+  PImage cookieImage = loadImage("cookie.png");
+
+>>>>>>> Stashed changes
   // Loop through all objects of the gapTextures array and load in the respective image dynamically.
   for (int i = 0; i<gapTextures.length; i++) {
     gapTextures[i] = loadImage(("GAP"+(i+1)+".png"));
@@ -83,6 +117,7 @@ void loadInteractableObjects() {
   yay = new SoundFile(this, "Yay.mp3");
   cheer = new SoundFile(this, "Cheer.mp3");
 
+
   // Create Interactable Objects
   storeSign = new StoreSign(storeSignOff, storeSignOn, true, 790, height-windowOffset-100, 360, 108);
   float signGap = 30;
@@ -90,6 +125,11 @@ void loadInteractableObjects() {
   giftsSign = new StoreSign(giftsOff, giftsOn, true, speelgoedSign.xPos+speelgoedSign.xSize+signGap, height-windowOffset-55);
   gamesSign = new StoreSign(gamesOff, gamesOn, true, giftsSign.xPos+giftsSign.xSize+signGap, height-windowOffset-55);
   robbers = new SecretImage(robbersImg, true, 843, 420, 75, 160);
+<<<<<<< Updated upstream
+=======
+  cookie = new Food(cookieImage, 641, 425, 90, 90);
+  train = new Train(trainImage, 121, 590, 150, 30);
+>>>>>>> Stashed changes
   
   
   // I'm not sure why this warning keeps popping up, but the object is going to be used later on;
@@ -97,15 +137,29 @@ void loadInteractableObjects() {
   
   // Set up the Green Army People
   for (int i = 1; i <= 15; i++) {
+<<<<<<< Updated upstream
     new GreenArmyPerson(gapTextures[floor(random(0,3.99))]);
   }
 
+=======
+    new GreenArmyPerson(gapTextures[floor(random(0, 3.99))]);
+  }
+  
+>>>>>>> Stashed changes
   // Set up the hidden presents around the map
   for (float[] coords : presentCoordinates) {
     new ChristmasPresent(coords[0], coords[1]);
   }
+  
+  // Set up Candy Canes
+  for (int i = 0; i <= 6; i++) {
+    Food candyCane = new Food(candyCaneImage, 121+170*i, 340, 80, 80);
+    candyCanes.add(candyCane);
+  }
+
 
   flashlight = new LightSource(0, 0, flashlightRadius*2.2);
+  
 }
 
 
@@ -149,11 +203,23 @@ void drawInteractableObjects() {
   speelgoedSign.render();
   giftsSign.render();
   gamesSign.render();
+<<<<<<< Updated upstream
 
+=======
+  train.render();
+  
+  // Draw the food items
+  for (Food candyCane : candyCanes) {
+    candyCane.render();
+  }
+  cookie.render();
+  
+>>>>>>> Stashed changes
   // Draw the flashlight's light
   flashlight.render();
   
 }
+
 
 
 
@@ -174,5 +240,5 @@ interface Clickable {
 
 interface Hoverable {
   void isLit(float xCheck, float yCheck, float radius);
-  void render();
+  void render(); // Added in so we can render all hoverable objects en-masse instead of having to do specific code for each individual class.
 }

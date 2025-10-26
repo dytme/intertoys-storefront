@@ -55,6 +55,7 @@ SoundFile music;
 
 
 void setup() {
+<<<<<<< Updated upstream
  
  size(1280,720,P2D); // P2D is more efficient than the default rendering engine. 
  surface.setLocation(100,100); // Force the window to appear on the screen (and not off-screen, can happen sometimes)
@@ -70,14 +71,34 @@ void setup() {
  music.amp(0.2);
  music.loop();
  
+=======
+
+  size(1280, 720, P2D); // P2D is more efficient than the default rendering engine.
+  surface.setLocation(100, 100); // Force the window to appear on the screen (and not off-screen, can happen sometimes)
+  pixelDensity(1); // Disable pixel scaling on high-resolution devices (causes issues when a device is connected to external monitors)
+  surface.setResizable(false); // Disable window resizing (a lot of positioning is absolute and not relative, would break stuff)
+
+  // Methods that load in different variables
+  loadStorefrontAssets();
+  loadInteractableObjects();
+
+  // Handle the background music
+  music = new SoundFile(this, "ALotLikeChristmas.mp3");
+  music.amp(0.2);
+  music.loop();
+
+  // Global eating sound
+  eatSound = new SoundFile(this, "eating.mp3");
+  trainWhistle = new SoundFile(this, "trainWhistle.mp3");
+>>>>>>> Stashed changes
 }
 
 
 void draw() {
-  
+
   background(#FFFFFF);
   noStroke();
-  
+
   // Draw the background scene itself
   drawBuilding();
   drawStoreSignHolder();
@@ -86,21 +107,29 @@ void draw() {
   // Make the entire scene darker (Christmas night <3 )
   fill(#44000000);
   rect(0, 0, width, height);
-  
+
   // Draw the interactable objects
   drawInteractableObjects();
-  
+
   for (Hoverable tempObj : hoverableObj) {
     tempObj.isLit(mouseX, mouseY, flashlightRadius);
   }
-  
+
   // Draw the overlapping part of the storefront
   drawStoreWindowFrame();
-  
+
   drawPresentInstructions(); // Gameplay instructions
+<<<<<<< Updated upstream
   
   // println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
+=======
 
+  if (displayEasterEgg) {
+    image(easterEggImage, 370, 28, 82, 82);
+  }
+>>>>>>> Stashed changes
+
+  // println("MouseX: " + mouseX + " // MouseY: " + mouseY); // Hopefully we won't forget to comment this one out, it's a dev/debug tool
 }
 
 
@@ -112,21 +141,65 @@ void draw() {
 // I tried defining a global variable for the resolution, but any approach ended up inducing bugs due to restrictions with the size() method. So, please excuse this repetition
 // Forces the window to not be resizable, admittedly in a bit of an improper way. I tried some of the methods online that attempted to mess with the 'hidden' settings for Processing, but none seemed to work.
 
+
 void windowResized() {
   surface.setSize(1280, 720);
 }
 
+
 void mousePressed() {
-  
   // Loop through all of clickableObj and define a temporary Clickable object to work with
   for (Clickable tempObj : clickableObj) {
     tempObj.onClick(mouseX, mouseY);
   }
-  
 }
+
 
 void mouseMoved() {
   flashlight.move(mouseX, mouseY);
   lastMouseX = mouseX;
   lastMouseY = mouseY;
 }
+<<<<<<< Updated upstream
+=======
+
+
+void keyPressed() {
+  
+  if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {
+    konamiInput.add(keyCode);
+
+    // Keep the last 8 inputs
+    if (konamiInput.size() > konamiSequence.length) {
+      konamiInput.remove(0);
+    }
+  }
+
+  // Check if the arrows match
+  if (konamiInput.size() == konamiSequence.length) {
+    
+    boolean sequenceMatch = true;
+    for (int i = 0; i < konamiSequence.length; i++) {
+      if (konamiInput.get(i) != konamiSequence[i]) {
+        sequenceMatch = false;
+        break;
+      }
+    }
+    
+    // If the arrows match, then check whether B and A are pressed in this specific order
+    if (sequenceMatch) {
+      // look for B and A
+      if (key == 'b' || key == 'B') {
+        konamiProgress = 1;
+      } else if (konamiProgress == 1 && (key == 'a'|| key == 'A')) {
+        displayEasterEgg = true; // display easter egg image
+        println("easter egg displayed");
+        SoundFile vineBoom = new SoundFile(this, "vineboom.mp3");
+        vineBoom.play();
+      }
+    }
+    
+  }
+  
+}
+>>>>>>> Stashed changes

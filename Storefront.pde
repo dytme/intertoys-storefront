@@ -167,6 +167,8 @@ void drawStorefrontFrame() {
   popMatrix();
 }
 
+
+// Draw the overlay of window frames on top of the interactable elements
 void drawStoreWindowFrame() {
   pushMatrix();
   translate(0, height-windowOffset);

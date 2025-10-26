@@ -269,3 +269,74 @@ class GreenArmyPerson implements Hoverable {
     } else exposed = false;
   }
 }
+
+
+
+class Food implements Clickable {
+  PImage image;
+  float xPos, yPos, xSize, ySize;
+  boolean visible = true;
+  Food(PImage image, float x, float y, float w, float h) {
+    this.image = image;
+    this.xPos = x;
+    this.yPos = y;
+    this.xSize = w;
+    this.ySize = h;
+    clickableObj.add(this);
+  }
+  
+  
+  void render() {
+    if (visible) {
+      image(image, xPos, yPos, xSize, ySize);
+    }
+  }
+  
+  
+  @Override public void onClick(float xMouse, float yMouse) {
+    if (isInRectBounds(xMouse, yMouse, xPos, yPos, xSize, ySize) && visible) {
+      eatSound.play();
+      visible = false;
+    }
+  }
+  
+}
+
+
+
+class Train implements Clickable {
+  PImage trainImage;
+  float xPos, yPos, xSize, ySize;
+
+  boolean moved = false;
+
+  // Add in the constructor here
+  Train(PImage trainImage, float x, float y, float w, float h) {
+    this.trainImage = trainImage;
+    this.xPos = x;
+    this.yPos = y;
+    this.xSize = w;
+    this.ySize = h;
+    clickableObj.add(this);
+  }
+
+
+  void render() {
+    image(trainImage, xPos, yPos, xSize, ySize);
+    if (xPos < 450 && moved) {
+      xPos = xPos + 2;
+    }
+  }
+
+
+  @Override public void onClick(float xMouse, float yMouse) {
+    if (!moved && isInRectBounds(xMouse, yMouse, xPos, yPos, xSize, ySize)) {
+      moved = true;
+      // Play the whistle sound
+      trainWhistle.play();
+    }
+  }
+  
+  
+}
+>>>>>>> Stashed changes
