@@ -206,13 +206,3 @@ void drawStoreWindowFrame() {
   image(christmasTree, middlePillar.xPos-30, windowOffset-231);
   popMatrix();
 }
-
-// Konami code inputs
-
-int[] konamiSequence = {
-  UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT
-};
-char[] konamiChars = {'b', 'a'};
-ArrayList<Integer> konamiInput = new ArrayList<Integer>();
-boolean displayEasterEgg = false;
-int konamiProgress = 0;

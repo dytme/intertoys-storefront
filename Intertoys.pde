@@ -118,12 +118,13 @@ void draw() {
 // I tried defining a global variable for the resolution, but any approach ended up inducing bugs due to restrictions with the size() method. So, please excuse this repetition
 // Forces the window to not be resizable, admittedly in a bit of an improper way. I tried some of the methods online that attempted to mess with the 'hidden' settings for Processing, but none seemed to work.
 
+
 void windowResized() {
   surface.setSize(1280, 720);
 }
 
+
 void mousePressed() {
-  
   // Loop through all of clickableObj and define a temporary Clickable object to work with
   for (Clickable tempObj : clickableObj) {
     tempObj.onClick(mouseX, mouseY);
@@ -131,11 +132,13 @@ void mousePressed() {
   
 }
 
+
 void mouseMoved() {
   flashlight.move(mouseX, mouseY);
   lastMouseX = mouseX;
   lastMouseY = mouseY;
 }
+
 
 void keyPressed() {
   if (keyCode == UP || keyCode == DOWN || keyCode == LEFT || keyCode == RIGHT) {

@@ -11,11 +11,14 @@
 // Global Variables
 float flashlightRadius = 25;
 int collectedPresentsCounter = 0;
+boolean displayEasterEgg = false;
+int konamiProgress = 0;
 
 // Interaction-Based ArrayLists
 ArrayList<Clickable> clickableObj = new ArrayList<>();
 ArrayList<Hoverable> hoverableObj = new ArrayList<>();
 ArrayList<Food> candyCanes = new ArrayList<>();
+ArrayList<Integer> konamiInput = new ArrayList<Integer>();
 
 // An array of coordinates for all of the presents in the game
 float[][] presentCoordinates = {
@@ -30,6 +33,11 @@ float[][] presentCoordinates = {
   {490, 620}
 };
 
+// Konami code inputs
+int[] konamiSequence = {
+  UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT
+};
+char[] konamiChars = {'b', 'a'};
 
 
 
