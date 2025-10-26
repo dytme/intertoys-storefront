@@ -34,10 +34,11 @@ float[][] presentCoordinates = {
 };
 
 // Konami code inputs
+char[] konamiChars = {'b', 'a'};
 int[] konamiSequence = {
   UP, UP, DOWN, DOWN, LEFT, RIGHT, LEFT, RIGHT
 };
-char[] konamiChars = {'b', 'a'};
+
 
 
 
@@ -66,6 +67,7 @@ PImage[] gapTextures = new PImage[4];
 Food cookie;
 // Train
 Train train;
+
 
 
 

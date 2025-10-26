@@ -160,7 +160,7 @@ class SecretImage implements Hoverable {
 
 
 
-
+// Collectable Christmas Presents, hidden around the map
 class ChristmasPresent implements Clickable, Hoverable {
 
   float xPos, yPos, xSize = 30, ySize = 30;
@@ -186,12 +186,12 @@ class ChristmasPresent implements Clickable, Hoverable {
     if (state || visible) {
       pushMatrix();
       translate(xPos, yPos);
-      fill(boxColor);
-      rect(0, 0, xSize, ySize*0.2);
-      rect(xSize*0.1, 0, xSize*0.8, ySize);
+        fill(boxColor);
+        rect(0, 0, xSize, ySize*0.2);
+        rect(xSize*0.1, 0, xSize*0.8, ySize);
 
-      fill(ribbonColor);
-      rect(xSize/2-xSize*0.1, 0, xSize*0.2, ySize);
+        fill(ribbonColor);
+        rect(xSize/2-xSize*0.1, 0, xSize*0.2, ySize);
       popMatrix();
     }
   }
@@ -216,6 +216,7 @@ class ChristmasPresent implements Clickable, Hoverable {
 
 
 
+// The moving soldiers in the window which freeze up if 'exposed'
 class GreenArmyPerson implements Hoverable {
   float xPos, yPos, xSize = 30, ySize = 30, minX = 107+xSize, maxX = 600-xSize;
   PImage img;
@@ -224,6 +225,7 @@ class GreenArmyPerson implements Hoverable {
   // Variables that handle the movement
   int direction = 1;
   float movementSpeed = 0.5;
+
 
   GreenArmyPerson(PImage img) {
     this.img = img;
@@ -239,6 +241,7 @@ class GreenArmyPerson implements Hoverable {
     hoverableObj.add(this);
   }
 
+
   void freeMove() {
 
     // Bounce the GAP off the walls of the windows once it reaches the borders
@@ -252,13 +255,11 @@ class GreenArmyPerson implements Hoverable {
   void render() {
     if (!exposed) freeMove(); // As long as it's not exposed, it will freely move.
 
-    // println(round(xPos));
-
     // Flip the entire "canvas" of each GAP when they're supposed to move the other way around.
     pushMatrix();
     translate(xPos, yPos);
-    scale(direction, 1);
-    image(img, 0, 0, xSize, ySize);
+      scale(direction, 1);
+      image(img, 0, 0, xSize, ySize);
     popMatrix();
   }
 
@@ -267,8 +268,12 @@ class GreenArmyPerson implements Hoverable {
       exposed = true;
     } else exposed = false;
   }
+  
 }
 
+
+
+// Interactable objects that can be eaten and play a funny sound when they do
 class Food implements Clickable {
   PImage image;
   float xPos, yPos, xSize, ySize;
@@ -281,27 +286,30 @@ class Food implements Clickable {
     this.ySize = h;
     clickableObj.add(this);
   }
+  
   void render() {
     if (visible) {
       image(image, xPos, yPos, xSize, ySize);
     }
   }
+  
   @Override public void onClick(float xMouse, float yMouse) {
     if (isInRectBounds(xMouse, yMouse, xPos, yPos, xSize, ySize) && visible) {
       eatSound.play();
       visible = false;
     }
   }
+  
 }
 
+
+
+// The train in the windowstill that moves when clicked, revealing a present underneath
 class Train implements Clickable {
   PImage trainImage;
   float xPos, yPos, xSize, ySize;
-
-  // Add in any other fields here
   boolean moved = false;
 
-  // Add in the constructor here
   Train(PImage trainImage, float x, float y, float w, float h) {
     this.trainImage = trainImage;
     this.xPos = x;
@@ -312,17 +320,17 @@ class Train implements Clickable {
   }
 
   void render() {
-  image(trainImage, xPos, yPos, xSize, ySize);
-  if (xPos < 450 && moved) {
-    xPos = xPos + 2;
+    image(trainImage, xPos, yPos, xSize, ySize);
+    if (xPos < 450 && moved) {
+      xPos = xPos + 2;
+    }
   }
-}
 
   @Override public void onClick(float xMouse, float yMouse) {
     if (!moved && isInRectBounds(xMouse, yMouse, xPos, yPos, xSize, ySize)) {
       moved = true;
-      // Play the whistle sound
       trainWhistle.play();
     }
   }
+  
 }
