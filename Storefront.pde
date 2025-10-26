@@ -30,10 +30,9 @@ TiledImage christmasGarland;
 TiledImage shelfGarland;
 
 // Standalone Images
-PImage easterEggImage;
 PImage christmasTree;
-PImage candyCaneImage;
-PImage cookieImage;
+
+
 
 
 // █▀▄▀█ █▀▀ ▀█▀ █░█ █▀█ █▀▄ █▀
@@ -65,8 +64,8 @@ void loadStorefrontAssets() {
   PImage christmasGarlandTexture = loadImage("Garland.png");
   christmasTree = loadImage("Christmas Tree.png");
   easterEggImage = loadImage("easterEggImage.png");
-  candyCaneImage = loadImage("candyCane.png");
-  cookieImage = loadImage("cookie.png");
+
+
   // Compute and save the textures
   brickWall = new TiledImage(brickWallTexture, 0, 0, width, height, 100, 100);
   planksWall = new TiledImage(planksWallTexture, 0, height-400, width, 400, 250, 250);
@@ -78,6 +77,7 @@ void loadStorefrontAssets() {
   leftPillar = new TiledImage(pillarTexture, 0, 0, 95, windowOffset, 35, 35);
   middlePillar = new TiledImage(pillarTexture, leftPillar.xSize+520, 0, 120, windowOffset, 35, 35);
   rightPillar = new TiledImage(pillarTexture, width-95, 0, 95, windowOffset, 35, 35);
+  
 }
 
 
@@ -139,7 +139,7 @@ void drawStoreSignHolder() {
 }
 
 
-// Render the actual windows of the storefront (where the magic happens!)
+// Render the pillars and frame of the storefront
 void drawStorefrontFrame() {
   pushMatrix();
   translate(0, height-windowOffset);
@@ -160,6 +160,8 @@ void drawStorefrontFrame() {
   popMatrix();
 }
 
+
+// Render the actual storefront, that is drawn on top of the interactable objects
 void drawStoreWindowFrame() {
   pushMatrix();
   translate(0, height-windowOffset);

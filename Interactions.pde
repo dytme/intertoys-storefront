@@ -48,6 +48,9 @@ char[] konamiChars = {'b', 'a'};
 // Sounds
 SoundFile click, yay, cheer, eatSound, trainWhistle;
 
+// Images
+PImage easterEggImage;
+
 // Interactable Objects
 StoreSign storeSign, speelgoedSign, giftsSign, gamesSign;
 
@@ -84,6 +87,8 @@ void loadInteractableObjects() {
   PImage gamesOff = loadImage("GamesOff.png");
   PImage giftsOn = loadImage("GiftsOn.png");
   PImage giftsOff = loadImage("GiftsOff.png");
+  PImage candyCaneImage = loadImage("candyCane.png");
+  PImage cookieImage = loadImage("cookie.png");
 
   // Loop through all objects of the gapTextures array and load in the respective image dynamically.
   for (int i = 0; i<gapTextures.length; i++) {
@@ -95,6 +100,7 @@ void loadInteractableObjects() {
   yay = new SoundFile(this, "Yay.mp3");
   cheer = new SoundFile(this, "Cheer.mp3");
 
+
   // Create Interactable Objects
   storeSign = new StoreSign(storeSignOff, storeSignOn, true, 790, height-windowOffset-100, 360, 108);
   float signGap = 30;
@@ -102,8 +108,9 @@ void loadInteractableObjects() {
   giftsSign = new StoreSign(giftsOff, giftsOn, true, speelgoedSign.xPos+speelgoedSign.xSize+signGap, height-windowOffset-55);
   gamesSign = new StoreSign(gamesOff, gamesOn, true, giftsSign.xPos+giftsSign.xSize+signGap, height-windowOffset-55);
   robbers = new SecretImage(robbersImg, true, 843, 420, 75, 160);
-  cookie = new Food(cookieImage, 641, 425, 90, 90);
   train = new Train(trainImage, 121, 590, 150, 30);
+  
+  
   // I'm not sure why this warning keeps popping up, but the object is going to be used later on;
   // Just not from these for-loops, these are only used to create them.
 
@@ -111,17 +118,20 @@ void loadInteractableObjects() {
   for (int i = 1; i <= 15; i++) {
     new GreenArmyPerson(gapTextures[floor(random(0, 3.99))]);
   }
-  // Set up Candy Canes
-  for (int i = 0; i <= 6; i++) {
-   Food candyCane = new Food(candyCaneImage, 121+170*i, 340, 80, 80);
-   candyCanes.add(candyCane);
-  }
-
- 
+  
   // Set up the hidden presents around the map
   for (float[] coords : presentCoordinates) {
     new ChristmasPresent(coords[0], coords[1]);
   }
+  
+  
+  // Set up Food Objects
+  cookie = new Food(cookieImage, 641, 425, 90, 90);
+  for (int i = 0; i <= 6; i++) {
+    Food candyCane = new Food(candyCaneImage, 121+170*i, 340, 80, 80);
+    candyCanes.add(candyCane);
+  }
+
 
   flashlight = new LightSource(0, 0, flashlightRadius*2.2);
 }
@@ -166,14 +176,18 @@ void drawInteractableObjects() {
   speelgoedSign.render();
   giftsSign.render();
   gamesSign.render();
-  for (Food candyCane:candyCanes) {
+  train.render();
+  
+  // Render Food Objects
+  cookie.render();
+  for (Food candyCane : candyCanes) {
     candyCane.render();
   }
-  cookie.render();
+  
   // Draw the flashlight's light
   flashlight.render();
-  train.render();
 }
+
 
 
 
@@ -192,7 +206,8 @@ interface Clickable {
   // was within the bounds of multiple complicated shapes at once, then this would be good approach
 }
 
+
 interface Hoverable {
   void isLit(float xCheck, float yCheck, float radius);
-  void render();
+  void render(); // Is used to render all of the hoverable objects in one go, instead of having to do separate code for each class.
 }
