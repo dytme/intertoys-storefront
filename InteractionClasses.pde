@@ -252,9 +252,13 @@ class GreenArmyPerson implements Hoverable {
 
   void render() {
     if (!exposed) freeMove(); // As long as it's not exposed, it will freely move.
+<<<<<<< Updated upstream
     
     println(round(xPos));
     
+=======
+
+>>>>>>> Stashed changes
     // Flip the entire "canvas" of each GAP when they're supposed to move the other way around.
     pushMatrix();
       translate(xPos, yPos);
@@ -269,6 +273,8 @@ class GreenArmyPerson implements Hoverable {
     } else exposed = false;
   }
 }
+<<<<<<< Updated upstream
+=======
 
 
 
